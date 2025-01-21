@@ -17,6 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE board SET DELETE_STATUS = 'DELETE' WHERE board_no = ?")
 @SQLRestriction("DELETE_STATUS = 'ACTIVE'")
+@Table(indexes = {
+	@Index(name = "idx_board_delete_status", columnList = "deleteStatus"),
+	@Index(name = "idx_board_no", columnList = "boardNo")
+})
 public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

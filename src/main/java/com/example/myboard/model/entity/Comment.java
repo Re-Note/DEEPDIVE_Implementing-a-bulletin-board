@@ -14,6 +14,10 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE comment SET DELETE_STATUS = 'DELETE' WHERE comment_no = ?")
 @SQLRestriction("DELETE_STATUS = 'ACTIVE'")
+@Table(indexes = {
+	@Index(name = "idx_comment_board_no", columnList = "board_no"),
+	@Index(name = "idx_comment_delete_status", columnList = "deleteStatus")
+})
 public class Comment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

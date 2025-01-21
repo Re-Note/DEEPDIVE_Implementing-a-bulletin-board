@@ -33,11 +33,21 @@ public class BoardService {
 	}
 
 	// 게시글 목록 조회
+	// public List<BoardListResponse> searchBoardList(int page, int pageSize) {
+	// 	return boardRepository.findAllByDeleteStatus(
+	// 			DeleteStatus.ACTIVE,
+	// 			PageRequest.of(page, pageSize, Sort.by("boardNo").descending())
+	// 		).map(BoardListResponse::from)
+	// 		.toList();
+	// }
+
+	// 게시글 목록 조회 (N+1 문제 해결)
 	public List<BoardListResponse> searchBoardList(int page, int pageSize) {
-		return boardRepository.findAllByDeleteStatus(
+		return boardRepository.findAllByDeleteStatusWithComments(
 				DeleteStatus.ACTIVE,
 				PageRequest.of(page, pageSize, Sort.by("boardNo").descending())
-			).map(BoardListResponse::from)
+			).stream()
+			.map(BoardListResponse::from)
 			.toList();
 	}
 
